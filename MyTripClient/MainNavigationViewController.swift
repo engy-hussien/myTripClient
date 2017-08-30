@@ -1,27 +1,33 @@
 //
-//  ViewController.swift
+//  MainNavigationViewController.swift
 //  MyTripClient
 //
-//  Created by Engy Hussein on 8/18/17.
+//  Created by Engy Hussein on 8/28/17.
 //  Copyright © 2017 Engy Hussein. All rights reserved.
 //
 
 import UIKit
-import GoogleMaps
+import SwiftyUserDefaults
 
-
-class ViewController: UIViewController {
+class MainNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
- //       self.embedSideMenu()
-        // Do any additional setup after loading the view, typically from a nib.
+        if Defaults[.kIsLoggedInUser] {
+            self.isNavigationBarHidden = true
+            embedSideMenu()
+            
+        } else {
+            navToRegisterVC()
+        }
+    }
+    
+    func navToRegisterVC() {
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "registerVC") as! RegisterViewController
+        self.setViewControllers([loginVC], animated: true)
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     func embedSideMenu() {
         let sideMenu = storyboard?.instantiateViewController(withIdentifier: "sideMenuVC") as! UINavigationController
         let homeVC = storyboard?.instantiateViewController(withIdentifier: "homeNC") as! UINavigationController
@@ -32,4 +38,3 @@ class ViewController: UIViewController {
 
 
 }
-
